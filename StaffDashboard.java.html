@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>StaffDashboard.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+StaffDashboard.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.</span><span class="s1">table</span><span class="s2">.</span><span class="s1">DefaultTableModel</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">StaffDashboard </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">JTable parkingTable</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">DefaultTableModel tableModel</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">ParkingMapPanel parkingMapPanel</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">StaffDashboard</span><span class="s2">() {</span>
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Staff Dashboard&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s4">800</span><span class="s2">, </span><span class="s4">600</span><span class="s2">);</span>
+        <span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+
+        <span class="s5">// Create main panel</span>
+        <span class="s1">JPanel mainPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">());</span>
+
+        <span class="s5">// Create button panel</span>
+        <span class="s1">JPanel buttonPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FlowLayout</span><span class="s2">());</span>
+        <span class="s1">JButton parkButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Park Vehicle&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton reserveButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Reserve Parking&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton releaseButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Release Vehicle&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton logoutButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Logout&quot;</span><span class="s2">);</span>
+
+        <span class="s1">buttonPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">parkButton</span><span class="s2">);</span>
+        <span class="s1">buttonPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">reserveButton</span><span class="s2">);</span>
+        <span class="s1">buttonPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">releaseButton</span><span class="s2">);</span>
+        <span class="s1">buttonPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">logoutButton</span><span class="s2">);</span>
+
+        <span class="s5">// Create parking map panel</span>
+        <span class="s1">parkingMapPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ParkingMapPanel</span><span class="s2">();</span>
+        <span class="s1">JPanel mapContainer </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">());</span>
+        <span class="s1">mapContainer</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">parkingMapPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">mapContainer</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Parking Map&quot;</span><span class="s2">, </span><span class="s1">SwingConstants</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">), </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">NORTH</span><span class="s2">);</span>
+
+        <span class="s5">// Create table</span>
+        <span class="s1">String</span><span class="s2">[] </span><span class="s1">columns </span><span class="s2">= {</span><span class="s3">&quot;Plate Number&quot;</span><span class="s2">, </span><span class="s3">&quot;Vehicle Type&quot;</span><span class="s2">, </span><span class="s3">&quot;Entry Time&quot;</span><span class="s2">, </span><span class="s3">&quot;Exit Time&quot;</span><span class="s2">, </span><span class="s3">&quot;Fee&quot;</span><span class="s2">, </span><span class="s3">&quot;Status&quot;</span><span class="s2">};</span>
+        <span class="s1">tableModel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">DefaultTableModel</span><span class="s2">(</span><span class="s1">columns</span><span class="s2">, </span><span class="s4">0</span><span class="s2">);</span>
+        <span class="s1">parkingTable </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTable</span><span class="s2">(</span><span class="s1">tableModel</span><span class="s2">);</span>
+        <span class="s1">JScrollPane scrollPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JScrollPane</span><span class="s2">(</span><span class="s1">parkingTable</span><span class="s2">);</span>
+
+        <span class="s5">// Split the main panel</span>
+        <span class="s1">JSplitPane splitPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JSplitPane</span><span class="s2">(</span><span class="s1">JSplitPane</span><span class="s2">.</span><span class="s1">VERTICAL_SPLIT</span><span class="s2">,</span>
+            <span class="s1">mapContainer</span><span class="s2">, </span><span class="s1">scrollPane</span><span class="s2">);</span>
+        <span class="s1">splitPane</span><span class="s2">.</span><span class="s1">setDividerLocation</span><span class="s2">(</span><span class="s4">300</span><span class="s2">);</span>
+
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">buttonPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">NORTH</span><span class="s2">);</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">splitPane</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+
+        <span class="s5">// Add action listeners</span>
+        <span class="s1">parkButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; showParkDialog</span><span class="s2">());</span>
+        <span class="s1">reserveButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; showReserveDialog</span><span class="s2">());</span>
+        <span class="s1">releaseButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; showReleaseDialog</span><span class="s2">());</span>
+        <span class="s1">logoutButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; logout</span><span class="s2">());</span>
+
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">mainPanel</span><span class="s2">);</span>
+        <span class="s1">refreshTable</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showParkDialog</span><span class="s2">() {</span>
+        <span class="s1">JTextField plateField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">typeBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s3">&quot;Car&quot;</span><span class="s2">, </span><span class="s3">&quot;Motorcycle&quot;</span><span class="s2">, </span><span class="s3">&quot;Truck&quot;</span><span class="s2">});</span>
+        <span class="s1">JTextField slotField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s4">0</span><span class="s2">, </span><span class="s4">1</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Plate Number:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">plateField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Vehicle Type:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeBox</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Slot Number (1-30):&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">slotField</span><span class="s2">);</span>
+
+        <span class="s0">int </span><span class="s1">result </span><span class="s2">= </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showConfirmDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">panel</span><span class="s2">, </span><span class="s3">&quot;Park Vehicle&quot;</span><span class="s2">,</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">OK_CANCEL_OPTION</span><span class="s2">, </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">PLAIN_MESSAGE</span><span class="s2">);</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">result </span><span class="s2">== </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">OK_OPTION</span><span class="s2">) {</span>
+            <span class="s0">try </span><span class="s2">{</span>
+                <span class="s1">String plateNumber </span><span class="s2">= </span><span class="s1">plateField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String type </span><span class="s2">= (</span><span class="s1">String</span><span class="s2">) </span><span class="s1">typeBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+                <span class="s0">int </span><span class="s1">slotNumber </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">slotField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">());</span>
+                
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">parkVehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">, </span><span class="s1">type</span><span class="s2">, </span><span class="s1">slotNumber</span><span class="s2">)) {</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Vehicle parked successfully!&quot;</span><span class="s2">);</span>
+                    <span class="s1">refreshTable</span><span class="s2">();</span>
+                    <span class="s1">parkingMapPanel</span><span class="s2">.</span><span class="s1">repaint</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Slot is not available!&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">NumberFormatException e</span><span class="s2">) {</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Invalid slot number!&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showReserveDialog</span><span class="s2">() {</span>
+        <span class="s1">JTextField plateField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+        <span class="s1">JComboBox</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">&gt; </span><span class="s1">typeBox </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JComboBox</span><span class="s2">&lt;&gt;(</span><span class="s0">new </span><span class="s1">String</span><span class="s2">[]{</span><span class="s3">&quot;Car&quot;</span><span class="s2">, </span><span class="s3">&quot;Motorcycle&quot;</span><span class="s2">, </span><span class="s3">&quot;Truck&quot;</span><span class="s2">});</span>
+        <span class="s1">JTextField slotField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">();</span>
+
+        <span class="s1">JPanel panel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridLayout</span><span class="s2">(</span><span class="s4">0</span><span class="s2">, </span><span class="s4">1</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Plate Number:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">plateField</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Vehicle Type:&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">typeBox</span><span class="s2">);</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Slot Number (1-30):&quot;</span><span class="s2">));</span>
+        <span class="s1">panel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">slotField</span><span class="s2">);</span>
+
+        <span class="s0">int </span><span class="s1">result </span><span class="s2">= </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showConfirmDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s1">panel</span><span class="s2">, </span><span class="s3">&quot;Reserve Parking&quot;</span><span class="s2">,</span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">OK_CANCEL_OPTION</span><span class="s2">, </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">PLAIN_MESSAGE</span><span class="s2">);</span>
+
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">result </span><span class="s2">== </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">OK_OPTION</span><span class="s2">) {</span>
+            <span class="s0">try </span><span class="s2">{</span>
+                <span class="s1">String plateNumber </span><span class="s2">= </span><span class="s1">plateField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+                <span class="s1">String type </span><span class="s2">= (</span><span class="s1">String</span><span class="s2">) </span><span class="s1">typeBox</span><span class="s2">.</span><span class="s1">getSelectedItem</span><span class="s2">();</span>
+                <span class="s0">int </span><span class="s1">slotNumber </span><span class="s2">= </span><span class="s1">Integer</span><span class="s2">.</span><span class="s1">parseInt</span><span class="s2">(</span><span class="s1">slotField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">());</span>
+                
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">reserveParking</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">, </span><span class="s1">type</span><span class="s2">, </span><span class="s1">slotNumber</span><span class="s2">)) {</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Parking reserved successfully!&quot;</span><span class="s2">);</span>
+                    <span class="s1">refreshTable</span><span class="s2">();</span>
+                    <span class="s1">parkingMapPanel</span><span class="s2">.</span><span class="s1">repaint</span><span class="s2">();</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Slot is not available!&quot;</span><span class="s2">);</span>
+                <span class="s2">}</span>
+            <span class="s2">} </span><span class="s0">catch </span><span class="s2">(</span><span class="s1">NumberFormatException e</span><span class="s2">) {</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Invalid slot number!&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">showReleaseDialog</span><span class="s2">() {</span>
+        <span class="s1">String plateNumber </span><span class="s2">= </span><span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showInputDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Enter plate number:&quot;</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">plateNumber </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; !</span><span class="s1">plateNumber</span><span class="s2">.</span><span class="s1">isEmpty</span><span class="s2">()) {</span>
+            <span class="s0">double </span><span class="s1">fee </span><span class="s2">= </span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">releaseVehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">);</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">fee </span><span class="s2">&gt; </span><span class="s4">0</span><span class="s2">) {</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span>
+                    <span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;Vehicle released. Fee: ₱%.2f&quot;</span><span class="s2">, </span><span class="s1">fee</span><span class="s2">));</span>
+                <span class="s1">refreshTable</span><span class="s2">();</span>
+                <span class="s1">parkingMapPanel</span><span class="s2">.</span><span class="s1">repaint</span><span class="s2">();</span>
+            <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span><span class="s3">&quot;Vehicle not found!&quot;</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">refreshTable</span><span class="s2">() {</span>
+        <span class="s1">tableModel</span><span class="s2">.</span><span class="s1">setRowCount</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">ParkingRecord record </span><span class="s2">: </span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">getParkingHistory</span><span class="s2">()) {</span>
+            <span class="s1">tableModel</span><span class="s2">.</span><span class="s1">addRow</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Object</span><span class="s2">[]{</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getPlateNumber</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getVehicleType</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getEntryTime</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getExitTime</span><span class="s2">() != </span><span class="s0">null </span><span class="s2">? </span><span class="s1">record</span><span class="s2">.</span><span class="s1">getExitTime</span><span class="s2">() : </span><span class="s3">&quot;-&quot;</span><span class="s2">,</span>
+                <span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;₱%.2f&quot;</span><span class="s2">, </span><span class="s1">record</span><span class="s2">.</span><span class="s1">getFee</span><span class="s2">()),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">()</span>
+            <span class="s2">});</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">logout</span><span class="s2">() {</span>
+        <span class="s0">new </span><span class="s1">LoginForm</span><span class="s2">().</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">dispose</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">} </span></pre>
+</body>
+</html>

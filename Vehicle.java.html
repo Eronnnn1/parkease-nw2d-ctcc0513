@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Vehicle.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Vehicle.java</font>
+</center></td></tr></table>
+<pre><span class="s0">public class </span><span class="s1">Vehicle </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">String plateNumber</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String type</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">String status</span><span class="s2">; </span><span class="s3">// PARKED, RESERVED</span>
+    <span class="s0">private </span><span class="s1">String entryTime</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">Vehicle</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">, </span><span class="s1">String type</span><span class="s2">, </span><span class="s1">String status</span><span class="s2">, </span><span class="s1">String entryTime</span><span class="s2">) {</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">plateNumber </span><span class="s2">= </span><span class="s1">plateNumber</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">type </span><span class="s2">= </span><span class="s1">type</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">status </span><span class="s2">= </span><span class="s1">status</span><span class="s2">;</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">entryTime </span><span class="s2">= </span><span class="s1">entryTime</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s3">// Getters and setters</span>
+    <span class="s0">public </span><span class="s1">String getPlateNumber</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">plateNumber</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">String getType</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">type</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">String getStatus</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">status</span><span class="s2">; }</span>
+    <span class="s0">public </span><span class="s1">String getEntryTime</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">entryTime</span><span class="s2">; }</span>
+    <span class="s0">public void </span><span class="s1">setStatus</span><span class="s2">(</span><span class="s1">String status</span><span class="s2">) { </span><span class="s0">this</span><span class="s2">.</span><span class="s1">status </span><span class="s2">= </span><span class="s1">status</span><span class="s2">; }</span>
+<span class="s2">} </span></pre>
+</body>
+</html>

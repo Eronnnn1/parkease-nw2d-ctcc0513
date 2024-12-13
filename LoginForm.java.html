@@ -1,0 +1,190 @@
+<html>
+<head>
+<title>LoginForm.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LoginForm.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.</span><span class="s1">event</span><span class="s2">.*;</span>
+
+<span class="s0">public class </span><span class="s1">LoginForm </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">JTextField usernameField</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">JPasswordField passwordField</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">JButton loginButton</span><span class="s2">;</span>
+    <span class="s0">private static final </span><span class="s1">Color PRIMARY_COLOR </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Color</span><span class="s2">(</span><span class="s3">41</span><span class="s2">, </span><span class="s3">128</span><span class="s2">, </span><span class="s3">185</span><span class="s2">); </span><span class="s4">// Nice blue</span>
+    <span class="s0">private static final </span><span class="s1">Color SECONDARY_COLOR </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Color</span><span class="s2">(</span><span class="s3">236</span><span class="s2">, </span><span class="s3">240</span><span class="s2">, </span><span class="s3">241</span><span class="s2">); </span><span class="s4">// Light gray</span>
+
+    <span class="s0">public </span><span class="s1">LoginForm</span><span class="s2">() {</span>
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s5">&quot;Park-Ease&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s3">400</span><span class="s2">, </span><span class="s3">500</span><span class="s2">);</span>
+        <span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+        <span class="s1">setResizable</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+
+        <span class="s4">// Create main panel with padding</span>
+        <span class="s1">JPanel mainPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">(</span><span class="s3">20</span><span class="s2">, </span><span class="s3">20</span><span class="s2">));</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createEmptyBorder</span><span class="s2">(</span><span class="s3">40</span><span class="s2">, </span><span class="s3">40</span><span class="s2">, </span><span class="s3">40</span><span class="s2">, </span><span class="s3">40</span><span class="s2">));</span>
+
+        <span class="s4">// Create logo/header panel</span>
+        <span class="s1">JPanel headerPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">());</span>
+        <span class="s1">headerPanel</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        
+        <span class="s4">// Add system name</span>
+        <span class="s1">JLabel titleLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s5">&quot;Park-Ease&quot;</span><span class="s2">);</span>
+        <span class="s1">titleLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s3">20</span><span class="s2">));</span>
+        <span class="s1">titleLabel</span><span class="s2">.</span><span class="s1">setHorizontalAlignment</span><span class="s2">(</span><span class="s1">SwingConstants</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">titleLabel</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">PRIMARY_COLOR</span><span class="s2">);</span>
+        
+        <span class="s4">// Add welcome message</span>
+        <span class="s1">JLabel welcomeLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s5">&quot;Parking Management System&quot;</span><span class="s2">);</span>
+        <span class="s1">welcomeLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">PLAIN</span><span class="s2">, </span><span class="s3">16</span><span class="s2">));</span>
+        <span class="s1">welcomeLabel</span><span class="s2">.</span><span class="s1">setHorizontalAlignment</span><span class="s2">(</span><span class="s1">SwingConstants</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">welcomeLabel</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">GRAY</span><span class="s2">);</span>
+
+        <span class="s1">headerPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">titleLabel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">NORTH</span><span class="s2">);</span>
+        <span class="s1">headerPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">Box</span><span class="s2">.</span><span class="s1">createRigidArea</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s3">0</span><span class="s2">, </span><span class="s3">10</span><span class="s2">)), </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">headerPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">welcomeLabel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">SOUTH</span><span class="s2">);</span>
+
+        <span class="s4">// Create form panel</span>
+        <span class="s1">JPanel formPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">GridBagLayout</span><span class="s2">());</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">GridBagConstraints gbc </span><span class="s2">= </span><span class="s0">new </span><span class="s1">GridBagConstraints</span><span class="s2">();</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">fill </span><span class="s2">= </span><span class="s1">GridBagConstraints</span><span class="s2">.</span><span class="s1">HORIZONTAL</span><span class="s2">;</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">insets </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">);</span>
+
+        <span class="s4">// Username field</span>
+        <span class="s1">JLabel userLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s5">&quot;Username&quot;</span><span class="s2">);</span>
+        <span class="s1">userLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">PLAIN</span><span class="s2">, </span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">usernameField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTextField</span><span class="s2">(</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">styleTextField</span><span class="s2">(</span><span class="s1">usernameField</span><span class="s2">);</span>
+
+        <span class="s4">// Password field</span>
+        <span class="s1">JLabel passLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s5">&quot;Password&quot;</span><span class="s2">);</span>
+        <span class="s1">passLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">PLAIN</span><span class="s2">, </span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">passwordField </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPasswordField</span><span class="s2">(</span><span class="s3">20</span><span class="s2">);</span>
+        <span class="s1">styleTextField</span><span class="s2">(</span><span class="s1">passwordField</span><span class="s2">);</span>
+
+        <span class="s4">// Login button</span>
+        <span class="s1">loginButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s5">&quot;Login&quot;</span><span class="s2">);</span>
+        <span class="s1">styleButton</span><span class="s2">(</span><span class="s1">loginButton</span><span class="s2">);</span>
+
+        <span class="s4">// Add components to form panel</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridx </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridy </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">userLabel</span><span class="s2">, </span><span class="s1">gbc</span><span class="s2">);</span>
+
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridy </span><span class="s2">= </span><span class="s3">1</span><span class="s2">;</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">insets </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">15</span><span class="s2">, </span><span class="s3">0</span><span class="s2">);</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">usernameField</span><span class="s2">, </span><span class="s1">gbc</span><span class="s2">);</span>
+
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridy </span><span class="s2">= </span><span class="s3">2</span><span class="s2">;</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">insets </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">);</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passLabel</span><span class="s2">, </span><span class="s1">gbc</span><span class="s2">);</span>
+
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridy </span><span class="s2">= </span><span class="s3">3</span><span class="s2">;</span>
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">insets </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Insets</span><span class="s2">(</span><span class="s3">5</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">25</span><span class="s2">, </span><span class="s3">0</span><span class="s2">);</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">passwordField</span><span class="s2">, </span><span class="s1">gbc</span><span class="s2">);</span>
+
+        <span class="s1">gbc</span><span class="s2">.</span><span class="s1">gridy </span><span class="s2">= </span><span class="s3">4</span><span class="s2">;</span>
+        <span class="s1">formPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">loginButton</span><span class="s2">, </span><span class="s1">gbc</span><span class="s2">);</span>
+
+        <span class="s4">// Add hint panel</span>
+        <span class="s1">JPanel hintPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FlowLayout</span><span class="s2">(</span><span class="s1">FlowLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">));</span>
+        <span class="s1">hintPanel</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">JLabel hintLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s5">&quot;Staff: staff/123 | Admin: admin/123&quot;</span><span class="s2">);</span>
+        <span class="s1">hintLabel</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">ITALIC</span><span class="s2">, </span><span class="s3">12</span><span class="s2">));</span>
+        <span class="s1">hintLabel</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">GRAY</span><span class="s2">);</span>
+        <span class="s1">hintPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">hintLabel</span><span class="s2">);</span>
+
+        <span class="s4">// Add all panels to main panel</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">headerPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">NORTH</span><span class="s2">);</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">formPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">hintPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">SOUTH</span><span class="s2">);</span>
+
+        <span class="s4">// Add action listeners</span>
+        <span class="s1">loginButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; login</span><span class="s2">());</span>
+        <span class="s4">// Add enter key listener</span>
+        <span class="s1">KeyListener enterListener </span><span class="s2">= </span><span class="s0">new </span><span class="s1">KeyAdapter</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">keyPressed</span><span class="s2">(</span><span class="s1">KeyEvent e</span><span class="s2">) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">e</span><span class="s2">.</span><span class="s1">getKeyCode</span><span class="s2">() == </span><span class="s1">KeyEvent</span><span class="s2">.</span><span class="s1">VK_ENTER</span><span class="s2">) {</span>
+                    <span class="s1">login</span><span class="s2">();</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">};</span>
+        <span class="s1">usernameField</span><span class="s2">.</span><span class="s1">addKeyListener</span><span class="s2">(</span><span class="s1">enterListener</span><span class="s2">);</span>
+        <span class="s1">passwordField</span><span class="s2">.</span><span class="s1">addKeyListener</span><span class="s2">(</span><span class="s1">enterListener</span><span class="s2">);</span>
+
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">mainPanel</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">styleTextField</span><span class="s2">(</span><span class="s1">JTextField textField</span><span class="s2">) {</span>
+        <span class="s1">textField</span><span class="s2">.</span><span class="s1">setPreferredSize</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s3">200</span><span class="s2">, </span><span class="s3">35</span><span class="s2">));</span>
+        <span class="s1">textField</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">PLAIN</span><span class="s2">, </span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">textField</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createCompoundBorder</span><span class="s2">(</span>
+            <span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createLineBorder</span><span class="s2">(</span><span class="s1">SECONDARY_COLOR</span><span class="s2">, </span><span class="s3">1</span><span class="s2">),</span>
+            <span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createEmptyBorder</span><span class="s2">(</span><span class="s3">5</span><span class="s2">, </span><span class="s3">10</span><span class="s2">, </span><span class="s3">5</span><span class="s2">, </span><span class="s3">10</span><span class="s2">)</span>
+        <span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">styleButton</span><span class="s2">(</span><span class="s1">JButton button</span><span class="s2">) {</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setPreferredSize</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Dimension</span><span class="s2">(</span><span class="s3">200</span><span class="s2">, </span><span class="s3">40</span><span class="s2">));</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setFont</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Font</span><span class="s2">(</span><span class="s5">&quot;Arial&quot;</span><span class="s2">, </span><span class="s1">Font</span><span class="s2">.</span><span class="s1">BOLD</span><span class="s2">, </span><span class="s3">14</span><span class="s2">));</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setForeground</span><span class="s2">(</span><span class="s1">Color</span><span class="s2">.</span><span class="s1">WHITE</span><span class="s2">);</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">PRIMARY_COLOR</span><span class="s2">);</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setBorder</span><span class="s2">(</span><span class="s1">BorderFactory</span><span class="s2">.</span><span class="s1">createEmptyBorder</span><span class="s2">());</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setFocusPainted</span><span class="s2">(</span><span class="s0">false</span><span class="s2">);</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">setCursor</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Cursor</span><span class="s2">(</span><span class="s1">Cursor</span><span class="s2">.</span><span class="s1">HAND_CURSOR</span><span class="s2">));</span>
+
+        <span class="s4">// Add hover effect</span>
+        <span class="s1">button</span><span class="s2">.</span><span class="s1">addMouseListener</span><span class="s2">(</span><span class="s0">new </span><span class="s1">MouseAdapter</span><span class="s2">() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">mouseEntered</span><span class="s2">(</span><span class="s1">MouseEvent e</span><span class="s2">) {</span>
+                <span class="s1">button</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">PRIMARY_COLOR</span><span class="s2">.</span><span class="s1">darker</span><span class="s2">());</span>
+            <span class="s2">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">mouseExited</span><span class="s2">(</span><span class="s1">MouseEvent e</span><span class="s2">) {</span>
+                <span class="s1">button</span><span class="s2">.</span><span class="s1">setBackground</span><span class="s2">(</span><span class="s1">PRIMARY_COLOR</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">});</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">login</span><span class="s2">() {</span>
+        <span class="s1">String username </span><span class="s2">= </span><span class="s1">usernameField</span><span class="s2">.</span><span class="s1">getText</span><span class="s2">();</span>
+        <span class="s1">String password </span><span class="s2">= </span><span class="s0">new </span><span class="s1">String</span><span class="s2">(</span><span class="s1">passwordField</span><span class="s2">.</span><span class="s1">getPassword</span><span class="s2">());</span>
+
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">User user </span><span class="s2">: </span><span class="s1">Main</span><span class="s2">.</span><span class="s1">getUsers</span><span class="s2">()) {</span>
+            <span class="s0">if </span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">authenticate</span><span class="s2">(</span><span class="s1">username</span><span class="s2">, </span><span class="s1">password</span><span class="s2">)) {</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">user</span><span class="s2">.</span><span class="s1">getRole</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s5">&quot;STAFF&quot;</span><span class="s2">)) {</span>
+                    <span class="s0">new </span><span class="s1">StaffDashboard</span><span class="s2">().</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+                <span class="s2">} </span><span class="s0">else </span><span class="s2">{</span>
+                    <span class="s0">new </span><span class="s1">ManagerDashboard</span><span class="s2">().</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+                <span class="s2">}</span>
+                <span class="s0">this</span><span class="s2">.</span><span class="s1">dispose</span><span class="s2">();</span>
+                <span class="s0">return</span><span class="s2">;</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">showMessageDialog</span><span class="s2">(</span><span class="s0">this</span><span class="s2">, </span>
+            <span class="s5">&quot;Invalid username or password!&quot;</span><span class="s2">, </span>
+            <span class="s5">&quot;Login Error&quot;</span><span class="s2">, </span>
+            <span class="s1">JOptionPane</span><span class="s2">.</span><span class="s1">ERROR_MESSAGE</span><span class="s2">);</span>
+    <span class="s2">}</span>
+<span class="s2">} </span></pre>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<html>
+<head>
+<title>ParkingSystem.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #2aacb8;}
+.s4 { color: #7a7e85;}
+.s5 { color: #6aab73;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ParkingSystem.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">util</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">time</span><span class="s2">.</span><span class="s1">LocalDateTime</span><span class="s2">;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">time</span><span class="s2">.</span><span class="s1">format</span><span class="s2">.</span><span class="s1">DateTimeFormatter</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">ParkingSystem </span><span class="s2">{</span>
+    <span class="s0">private static </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Double</span><span class="s2">&gt; </span><span class="s1">vehicleFees </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HashMap</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private static </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Double</span><span class="s2">&gt; </span><span class="s1">initialFees </span><span class="s2">= </span><span class="s0">new </span><span class="s1">HashMap</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private static </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">Vehicle</span><span class="s2">&gt; </span><span class="s1">parkedVehicles </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private static </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">ParkingRecord</span><span class="s2">&gt; </span><span class="s1">parkingHistory </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ArrayList</span><span class="s2">&lt;&gt;();</span>
+    <span class="s0">private static double </span><span class="s1">totalRevenue </span><span class="s2">= </span><span class="s3">0</span><span class="s2">;</span>
+    <span class="s0">private static </span><span class="s1">ParkingSlot</span><span class="s2">[][] </span><span class="s1">parkingMap </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ParkingSlot</span><span class="s2">[</span><span class="s3">5</span><span class="s2">][</span><span class="s3">6</span><span class="s2">]; </span><span class="s4">// 5 rows, 6 columns</span>
+
+    <span class="s0">static </span><span class="s2">{</span>
+        <span class="s4">// Initialize hourly parking fees</span>
+        <span class="s1">vehicleFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Car&quot;</span><span class="s2">, </span><span class="s3">50.0</span><span class="s2">);</span>
+        <span class="s1">vehicleFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Motorcycle&quot;</span><span class="s2">, </span><span class="s3">30.0</span><span class="s2">);</span>
+        <span class="s1">vehicleFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Truck&quot;</span><span class="s2">, </span><span class="s3">100.0</span><span class="s2">);</span>
+
+        <span class="s4">// Initialize initial parking fees</span>
+        <span class="s1">initialFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Car&quot;</span><span class="s2">, </span><span class="s3">30.0</span><span class="s2">);</span>
+        <span class="s1">initialFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Motorcycle&quot;</span><span class="s2">, </span><span class="s3">20.0</span><span class="s2">);</span>
+        <span class="s1">initialFees</span><span class="s2">.</span><span class="s1">put</span><span class="s2">(</span><span class="s5">&quot;Truck&quot;</span><span class="s2">, </span><span class="s3">50.0</span><span class="s2">);</span>
+
+        <span class="s4">// Initialize parking slots</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">row </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">row </span><span class="s2">&lt; </span><span class="s3">5</span><span class="s2">; </span><span class="s1">row</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">col </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">col </span><span class="s2">&lt; </span><span class="s3">6</span><span class="s2">; </span><span class="s1">col</span><span class="s2">++) {</span>
+                <span class="s1">parkingMap</span><span class="s2">[</span><span class="s1">row</span><span class="s2">][</span><span class="s1">col</span><span class="s2">] = </span><span class="s0">new </span><span class="s1">ParkingSlot</span><span class="s2">(</span><span class="s1">row </span><span class="s2">* </span><span class="s3">6 </span><span class="s2">+ </span><span class="s1">col </span><span class="s2">+ </span><span class="s3">1</span><span class="s2">);</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static boolean </span><span class="s1">parkVehicle</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">, </span><span class="s1">String type</span><span class="s2">, </span><span class="s0">int </span><span class="s1">slotNumber</span><span class="s2">) {</span>
+        <span class="s1">ParkingSlot slot </span><span class="s2">= </span><span class="s1">findSlotByNumber</span><span class="s2">(</span><span class="s1">slotNumber</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">slot </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">slot</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s5">&quot;AVAILABLE&quot;</span><span class="s2">)) {</span>
+            <span class="s1">String currentTime </span><span class="s2">= </span><span class="s1">getCurrentTime</span><span class="s2">();</span>
+            <span class="s1">Vehicle vehicle </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Vehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">, </span><span class="s1">type</span><span class="s2">, </span><span class="s5">&quot;PARKED&quot;</span><span class="s2">, </span><span class="s1">currentTime</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setVehicle</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setStatus</span><span class="s2">(</span><span class="s5">&quot;PARKED&quot;</span><span class="s2">);</span>
+            <span class="s1">parkedVehicles</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            
+            <span class="s4">// Add initial fee to total revenue</span>
+            <span class="s0">double </span><span class="s1">initialFee </span><span class="s2">= </span><span class="s1">initialFees</span><span class="s2">.</span><span class="s1">getOrDefault</span><span class="s2">(</span><span class="s1">type</span><span class="s2">, </span><span class="s3">0.0</span><span class="s2">);</span>
+            <span class="s1">totalRevenue </span><span class="s2">+= </span><span class="s1">initialFee</span><span class="s2">;</span>
+            
+            <span class="s4">// Add to parking history with initial fee</span>
+            <span class="s1">addToParkingHistory</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">, </span><span class="s0">null</span><span class="s2">, </span><span class="s5">&quot;PARKED&quot;</span><span class="s2">, </span><span class="s1">initialFee</span><span class="s2">);</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static boolean </span><span class="s1">reserveParking</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">, </span><span class="s1">String type</span><span class="s2">, </span><span class="s0">int </span><span class="s1">slotNumber</span><span class="s2">) {</span>
+        <span class="s1">ParkingSlot slot </span><span class="s2">= </span><span class="s1">findSlotByNumber</span><span class="s2">(</span><span class="s1">slotNumber</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">slot </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">slot</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s5">&quot;AVAILABLE&quot;</span><span class="s2">)) {</span>
+            <span class="s1">String currentTime </span><span class="s2">= </span><span class="s1">getCurrentTime</span><span class="s2">();</span>
+            <span class="s1">Vehicle vehicle </span><span class="s2">= </span><span class="s0">new </span><span class="s1">Vehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">, </span><span class="s1">type</span><span class="s2">, </span><span class="s5">&quot;RESERVED&quot;</span><span class="s2">, </span><span class="s1">currentTime</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setVehicle</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setStatus</span><span class="s2">(</span><span class="s5">&quot;RESERVED&quot;</span><span class="s2">);</span>
+            <span class="s1">parkedVehicles</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            <span class="s1">addToParkingHistory</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">, </span><span class="s0">null</span><span class="s2">, </span><span class="s5">&quot;RESERVED&quot;</span><span class="s2">, </span><span class="s3">0.0</span><span class="s2">);</span>
+            <span class="s0">return true</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return false</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static double </span><span class="s1">releaseVehicle</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">) {</span>
+        <span class="s1">Vehicle vehicle </span><span class="s2">= </span><span class="s1">findVehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">);</span>
+        <span class="s1">ParkingSlot slot </span><span class="s2">= </span><span class="s1">findSlotByVehicle</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">);</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">vehicle </span><span class="s2">!= </span><span class="s0">null </span><span class="s2">&amp;&amp; </span><span class="s1">slot </span><span class="s2">!= </span><span class="s0">null</span><span class="s2">) {</span>
+            <span class="s0">double </span><span class="s1">fee </span><span class="s2">= </span><span class="s1">calculateFee</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            <span class="s1">totalRevenue </span><span class="s2">+= </span><span class="s1">fee</span><span class="s2">;</span>
+            <span class="s1">parkedVehicles</span><span class="s2">.</span><span class="s1">remove</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setVehicle</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+            <span class="s1">slot</span><span class="s2">.</span><span class="s1">setStatus</span><span class="s2">(</span><span class="s5">&quot;AVAILABLE&quot;</span><span class="s2">);</span>
+            <span class="s1">addToParkingHistory</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">, </span><span class="s1">getCurrentTime</span><span class="s2">(), </span><span class="s5">&quot;RELEASED&quot;</span><span class="s2">, </span><span class="s3">0.0</span><span class="s2">);</span>
+            <span class="s0">return </span><span class="s1">fee</span><span class="s2">;</span>
+        <span class="s2">}</span>
+        <span class="s0">return </span><span class="s3">0</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static void </span><span class="s1">addToParkingHistory</span><span class="s2">(</span><span class="s1">Vehicle vehicle</span><span class="s2">, </span><span class="s1">String exitTime</span><span class="s2">, </span><span class="s1">String status</span><span class="s2">, </span><span class="s1">Double initialFee</span><span class="s2">) {</span>
+        <span class="s0">double </span><span class="s1">fee </span><span class="s2">= </span><span class="s3">0.0</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">status</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s5">&quot;RELEASED&quot;</span><span class="s2">)) {</span>
+            <span class="s1">fee </span><span class="s2">= </span><span class="s1">calculateFee</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">);</span>
+        <span class="s2">} </span><span class="s0">else if </span><span class="s2">(</span><span class="s1">status</span><span class="s2">.</span><span class="s1">equals</span><span class="s2">(</span><span class="s5">&quot;PARKED&quot;</span><span class="s2">)) {</span>
+            <span class="s1">fee </span><span class="s2">= </span><span class="s1">initialFee</span><span class="s2">;</span>
+        <span class="s2">}</span>
+
+        <span class="s1">ParkingRecord record </span><span class="s2">= </span><span class="s0">new </span><span class="s1">ParkingRecord</span><span class="s2">(</span>
+            <span class="s1">vehicle</span><span class="s2">.</span><span class="s1">getPlateNumber</span><span class="s2">(),</span>
+            <span class="s1">vehicle</span><span class="s2">.</span><span class="s1">getType</span><span class="s2">(),</span>
+            <span class="s1">vehicle</span><span class="s2">.</span><span class="s1">getEntryTime</span><span class="s2">(),</span>
+            <span class="s1">exitTime</span><span class="s2">,</span>
+            <span class="s1">fee</span><span class="s2">,</span>
+            <span class="s1">status</span>
+        <span class="s2">);</span>
+        <span class="s1">parkingHistory</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">record</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static </span><span class="s1">Vehicle findVehicle</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">parkedVehicles</span><span class="s2">.</span><span class="s1">stream</span><span class="s2">()</span>
+            <span class="s2">.</span><span class="s1">filter</span><span class="s2">(</span><span class="s1">v -&gt; v</span><span class="s2">.</span><span class="s1">getPlateNumber</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">))</span>
+            <span class="s2">.</span><span class="s1">findFirst</span><span class="s2">()</span>
+            <span class="s2">.</span><span class="s1">orElse</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static double </span><span class="s1">calculateFee</span><span class="s2">(</span><span class="s1">Vehicle vehicle</span><span class="s2">) {</span>
+        <span class="s0">return </span><span class="s1">vehicleFees</span><span class="s2">.</span><span class="s1">getOrDefault</span><span class="s2">(</span><span class="s1">vehicle</span><span class="s2">.</span><span class="s1">getType</span><span class="s2">(), </span><span class="s3">0.0</span><span class="s2">);</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static </span><span class="s1">String getCurrentTime</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">LocalDateTime</span><span class="s2">.</span><span class="s1">now</span><span class="s2">().</span><span class="s1">format</span><span class="s2">(</span><span class="s1">DateTimeFormatter</span><span class="s2">.</span><span class="s1">ofPattern</span><span class="s2">(</span><span class="s5">&quot;yyyy-MM-dd HH:mm:ss&quot;</span><span class="s2">));</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static </span><span class="s1">ParkingSlot findSlotByNumber</span><span class="s2">(</span><span class="s0">int </span><span class="s1">slotNumber</span><span class="s2">) {</span>
+        <span class="s0">int </span><span class="s1">row </span><span class="s2">= (</span><span class="s1">slotNumber </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) / </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">int </span><span class="s1">col </span><span class="s2">= (</span><span class="s1">slotNumber </span><span class="s2">- </span><span class="s3">1</span><span class="s2">) % </span><span class="s3">6</span><span class="s2">;</span>
+        <span class="s0">if </span><span class="s2">(</span><span class="s1">row </span><span class="s2">&gt;= </span><span class="s3">0 </span><span class="s2">&amp;&amp; </span><span class="s1">row </span><span class="s2">&lt; </span><span class="s3">5 </span><span class="s2">&amp;&amp; </span><span class="s1">col </span><span class="s2">&gt;= </span><span class="s3">0 </span><span class="s2">&amp;&amp; </span><span class="s1">col </span><span class="s2">&lt; </span><span class="s3">6</span><span class="s2">) {</span>
+            <span class="s0">return </span><span class="s1">parkingMap</span><span class="s2">[</span><span class="s1">row</span><span class="s2">][</span><span class="s1">col</span><span class="s2">];</span>
+        <span class="s2">}</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private static </span><span class="s1">ParkingSlot findSlotByVehicle</span><span class="s2">(</span><span class="s1">String plateNumber</span><span class="s2">) {</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">row </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">row </span><span class="s2">&lt; </span><span class="s3">5</span><span class="s2">; </span><span class="s1">row</span><span class="s2">++) {</span>
+            <span class="s0">for </span><span class="s2">(</span><span class="s0">int </span><span class="s1">col </span><span class="s2">= </span><span class="s3">0</span><span class="s2">; </span><span class="s1">col </span><span class="s2">&lt; </span><span class="s3">6</span><span class="s2">; </span><span class="s1">col</span><span class="s2">++) {</span>
+                <span class="s1">ParkingSlot slot </span><span class="s2">= </span><span class="s1">parkingMap</span><span class="s2">[</span><span class="s1">row</span><span class="s2">][</span><span class="s1">col</span><span class="s2">];</span>
+                <span class="s0">if </span><span class="s2">(</span><span class="s1">slot</span><span class="s2">.</span><span class="s1">getVehicle</span><span class="s2">() != </span><span class="s0">null </span><span class="s2">&amp;&amp; </span>
+                    <span class="s1">slot</span><span class="s2">.</span><span class="s1">getVehicle</span><span class="s2">().</span><span class="s1">getPlateNumber</span><span class="s2">().</span><span class="s1">equals</span><span class="s2">(</span><span class="s1">plateNumber</span><span class="s2">)) {</span>
+                    <span class="s0">return </span><span class="s1">slot</span><span class="s2">;</span>
+                <span class="s2">}</span>
+            <span class="s2">}</span>
+        <span class="s2">}</span>
+        <span class="s0">return null</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s0">public static </span><span class="s1">ParkingSlot</span><span class="s2">[][] </span><span class="s1">getParkingMap</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">parkingMap</span><span class="s2">;</span>
+    <span class="s2">}</span>
+
+    <span class="s4">// Getters for dashboard</span>
+    <span class="s0">public static </span><span class="s1">List</span><span class="s2">&lt;</span><span class="s1">ParkingRecord</span><span class="s2">&gt; </span><span class="s1">getParkingHistory</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">parkingHistory</span><span class="s2">; }</span>
+    <span class="s0">public static double </span><span class="s1">getTotalRevenue</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">totalRevenue</span><span class="s2">; }</span>
+    <span class="s0">public static </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Double</span><span class="s2">&gt; </span><span class="s1">getVehicleFees</span><span class="s2">() { </span><span class="s0">return </span><span class="s1">vehicleFees</span><span class="s2">; }</span>
+    <span class="s0">public static </span><span class="s1">Map</span><span class="s2">&lt;</span><span class="s1">String</span><span class="s2">, </span><span class="s1">Double</span><span class="s2">&gt; </span><span class="s1">getInitialFees</span><span class="s2">() {</span>
+        <span class="s0">return </span><span class="s1">initialFees</span><span class="s2">;</span>
+    <span class="s2">}</span>
+<span class="s2">} </span></pre>
+</body>
+</html>

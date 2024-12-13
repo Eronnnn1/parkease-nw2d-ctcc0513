@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>ManagerDashboard.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cf8e6d;}
+.s1 { color: #bcbec4;}
+.s2 { color: #bcbec4;}
+.s3 { color: #6aab73;}
+.s4 { color: #2aacb8;}
+.s5 { color: #7a7e85;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+ManagerDashboard.java</font>
+</center></td></tr></table>
+<pre><span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">java</span><span class="s2">.</span><span class="s1">awt</span><span class="s2">.*;</span>
+<span class="s0">import </span><span class="s1">javax</span><span class="s2">.</span><span class="s1">swing</span><span class="s2">.</span><span class="s1">table</span><span class="s2">.</span><span class="s1">DefaultTableModel</span><span class="s2">;</span>
+
+<span class="s0">public class </span><span class="s1">ManagerDashboard </span><span class="s0">extends </span><span class="s1">JFrame </span><span class="s2">{</span>
+    <span class="s0">private </span><span class="s1">JTable parkingTable</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">DefaultTableModel tableModel</span><span class="s2">;</span>
+    <span class="s0">private </span><span class="s1">JLabel revenueLabel</span><span class="s2">;</span>
+
+    <span class="s0">public </span><span class="s1">ManagerDashboard</span><span class="s2">() {</span>
+        <span class="s1">setTitle</span><span class="s2">(</span><span class="s3">&quot;Manager Dashboard&quot;</span><span class="s2">);</span>
+        <span class="s1">setSize</span><span class="s2">(</span><span class="s4">800</span><span class="s2">, </span><span class="s4">600</span><span class="s2">);</span>
+        <span class="s1">setDefaultCloseOperation</span><span class="s2">(</span><span class="s1">JFrame</span><span class="s2">.</span><span class="s1">EXIT_ON_CLOSE</span><span class="s2">);</span>
+        <span class="s1">setLocationRelativeTo</span><span class="s2">(</span><span class="s0">null</span><span class="s2">);</span>
+
+        <span class="s1">JPanel mainPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">BorderLayout</span><span class="s2">());</span>
+
+        <span class="s5">// Create top panel for revenue</span>
+        <span class="s1">JPanel topPanel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JPanel</span><span class="s2">(</span><span class="s0">new </span><span class="s1">FlowLayout</span><span class="s2">(</span><span class="s1">FlowLayout</span><span class="s2">.</span><span class="s1">LEFT</span><span class="s2">));</span>
+        <span class="s1">revenueLabel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JLabel</span><span class="s2">(</span><span class="s3">&quot;Total Revenue: ₱0.00&quot;</span><span class="s2">);</span>
+        <span class="s1">JButton logoutButton </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JButton</span><span class="s2">(</span><span class="s3">&quot;Logout&quot;</span><span class="s2">);</span>
+        <span class="s1">topPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">revenueLabel</span><span class="s2">);</span>
+        <span class="s1">topPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">logoutButton</span><span class="s2">);</span>
+
+        <span class="s5">// Create table</span>
+        <span class="s1">String</span><span class="s2">[] </span><span class="s1">columns </span><span class="s2">= {</span><span class="s3">&quot;Plate Number&quot;</span><span class="s2">, </span><span class="s3">&quot;Vehicle Type&quot;</span><span class="s2">, </span><span class="s3">&quot;Entry Time&quot;</span><span class="s2">, </span><span class="s3">&quot;Exit Time&quot;</span><span class="s2">, </span><span class="s3">&quot;Fee&quot;</span><span class="s2">, </span><span class="s3">&quot;Status&quot;</span><span class="s2">};</span>
+        <span class="s1">tableModel </span><span class="s2">= </span><span class="s0">new </span><span class="s1">DefaultTableModel</span><span class="s2">(</span><span class="s1">columns</span><span class="s2">, </span><span class="s4">0</span><span class="s2">);</span>
+        <span class="s1">parkingTable </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JTable</span><span class="s2">(</span><span class="s1">tableModel</span><span class="s2">);</span>
+        <span class="s1">JScrollPane scrollPane </span><span class="s2">= </span><span class="s0">new </span><span class="s1">JScrollPane</span><span class="s2">(</span><span class="s1">parkingTable</span><span class="s2">);</span>
+
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">topPanel</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">NORTH</span><span class="s2">);</span>
+        <span class="s1">mainPanel</span><span class="s2">.</span><span class="s1">add</span><span class="s2">(</span><span class="s1">scrollPane</span><span class="s2">, </span><span class="s1">BorderLayout</span><span class="s2">.</span><span class="s1">CENTER</span><span class="s2">);</span>
+
+        <span class="s1">logoutButton</span><span class="s2">.</span><span class="s1">addActionListener</span><span class="s2">(</span><span class="s1">e -&gt; logout</span><span class="s2">());</span>
+
+        <span class="s1">add</span><span class="s2">(</span><span class="s1">mainPanel</span><span class="s2">);</span>
+        <span class="s1">refreshData</span><span class="s2">();</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">refreshData</span><span class="s2">() {</span>
+        <span class="s5">// Update revenue</span>
+        <span class="s1">revenueLabel</span><span class="s2">.</span><span class="s1">setText</span><span class="s2">(</span><span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;Total Revenue: ₱%.2f&quot;</span><span class="s2">, </span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">getTotalRevenue</span><span class="s2">()));</span>
+
+        <span class="s5">// Update table</span>
+        <span class="s1">tableModel</span><span class="s2">.</span><span class="s1">setRowCount</span><span class="s2">(</span><span class="s4">0</span><span class="s2">);</span>
+        <span class="s0">for </span><span class="s2">(</span><span class="s1">ParkingRecord record </span><span class="s2">: </span><span class="s1">ParkingSystem</span><span class="s2">.</span><span class="s1">getParkingHistory</span><span class="s2">()) {</span>
+            <span class="s1">tableModel</span><span class="s2">.</span><span class="s1">addRow</span><span class="s2">(</span><span class="s0">new </span><span class="s1">Object</span><span class="s2">[]{</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getPlateNumber</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getVehicleType</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getEntryTime</span><span class="s2">(),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getExitTime</span><span class="s2">() != </span><span class="s0">null </span><span class="s2">? </span><span class="s1">record</span><span class="s2">.</span><span class="s1">getExitTime</span><span class="s2">() : </span><span class="s3">&quot;-&quot;</span><span class="s2">,</span>
+                <span class="s1">String</span><span class="s2">.</span><span class="s1">format</span><span class="s2">(</span><span class="s3">&quot;₱%.2f&quot;</span><span class="s2">, </span><span class="s1">record</span><span class="s2">.</span><span class="s1">getFee</span><span class="s2">()),</span>
+                <span class="s1">record</span><span class="s2">.</span><span class="s1">getStatus</span><span class="s2">()</span>
+            <span class="s2">});</span>
+        <span class="s2">}</span>
+    <span class="s2">}</span>
+
+    <span class="s0">private void </span><span class="s1">logout</span><span class="s2">() {</span>
+        <span class="s0">new </span><span class="s1">LoginForm</span><span class="s2">().</span><span class="s1">setVisible</span><span class="s2">(</span><span class="s0">true</span><span class="s2">);</span>
+        <span class="s0">this</span><span class="s2">.</span><span class="s1">dispose</span><span class="s2">();</span>
+    <span class="s2">}</span>
+<span class="s2">}</span></pre>
+</body>
+</html>
